@@ -1,19 +1,33 @@
 class StateMachine:
     def __init__(self):
-        self.state = State()
-
-    def update():
         pass
 
-    def on_event(self, verb, obj):
-        self.state = self.state.on_event(verb, obj)
+    def update(self, verb, obj):
+        pass
+
+class Player(StateMachine):
+
+    def __init__(self, room):
+        self.location = Location(room)
+
+    def update(self, verb, obj):
+        self.location.update(verb,obj)
+    
+
+class Location(StateMachine):
+    def __init__(self, room):
+        self.room = room
+    
+    def update(self, verb, obj):
+        self.room = self.room.update(verb,obj)
+
 
 class State:
 
     def __init__(self):
         pass
 
-    def on_event(self, verb, obj): 
+    def update(self, verb, obj): 
         pass
 
     def __repr__(self):
@@ -29,7 +43,7 @@ class Room(State):
         self.long_desc = long_desc
         self.neighbours = [north, east, south, west]
 
-    def on_event(self, verb, obj):
+    def update(self, verb, obj):
         if verb == 'move':
             if obj == 'north': 
                 return self.neighbours[0]
