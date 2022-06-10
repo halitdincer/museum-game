@@ -8,19 +8,10 @@ class StateMachine:
 class Player(StateMachine):
 
     def __init__(self, room):
-        self.location = Location(room)
-
-    def update(self, verb, obj):
-        self.location.update(verb,obj)
-    
-
-class Location(StateMachine):
-    def __init__(self, room):
         self.room = room
-    
-    def update(self, verb, obj):
-        self.room = self.room.update(verb,obj)
 
+    def update(self, verb, obj):
+        self.room =  self.room.update(verb,obj)
 
 class State:
 
@@ -34,23 +25,29 @@ class State:
         return self.__str__()
 
     def __str__(self):
-        return self.__class__.__name__
+        pass
 
 class Room(State):
 
-    def __init__(self,short_desc,long_desc,north,east,south,west):
+    def __init__(self,name,short_desc,long_desc,north,east,south,west):
+
+        self.name = name
         self.short_desc = short_desc
         self.long_desc = long_desc
-        self.neighbours = [north, east, south, west]
+        self.neighbours = {
+                    "north" : north,
+                    "east" : east,
+                    "south" : south,
+                    "west" : west }
 
     def update(self, verb, obj):
         if verb == 'move':
-            if obj == 'north': 
-                return self.neighbours[0]
-            elif obj == 'east': 
-                return self.neighbours[1]
-            elif obj == 'south': 
-                return self.neighbours[2]
-            elif obj == 'west': 
-                return self.neighbours[3]
+            if self.neighbours[obj]:
+                return self.neighbours[obj]
+            else:
+                print("There is no entrance at this way.")
+                return
+
+    def __str__(self):
+        return  "Room: " + self.name
         
