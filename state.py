@@ -1,3 +1,5 @@
+from item import Item
+
 class StateMachine:
     def __init__(self):
         pass
@@ -7,8 +9,10 @@ class StateMachine:
 
 class Player(StateMachine):
 
-    def __init__(self, room):
+    def __init__(self, name, room):
+        self.name = name
         self.room = room
+        self.inventory = Room("Inventory: " + name,"lorem", "lorem ipsum", None, None, None, None)
 
     def update(self, verb, obj):
         self.room =  self.room.update(verb,obj)
@@ -39,6 +43,10 @@ class Room(State):
                     "east" : east,
                     "south" : south,
                     "west" : west }
+
+    @property
+    def items(self):
+        return [item for item in Item.instances if item.location == self]
 
     def update(self, verb, obj):
         if verb == 'move':
