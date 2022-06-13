@@ -54,7 +54,7 @@ class Room(State):
                 return self.neighbours[obj]
             else:
                 print("There is no entrance at this way.")
-                return
+                return self
 
     def __str__(self):
         return  "Room: " + self.name
