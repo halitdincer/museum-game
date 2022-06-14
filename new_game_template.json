@@ -1,0 +1,124 @@
+{
+    "rooms":
+    [
+        {
+            "id": "lobby", 
+            "name": "Lobby",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "",
+                "east" : "east_wing",
+                "south" : "",
+                "west" : "west_wing"
+            } 
+        },
+        {
+            "id": "east_wing", 
+            "name": "East Wing",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "parents_bedroom",
+                "east" : "kids_bedroom",
+                "south" : "washroom",
+                "west" : "lobby"
+            } 
+        },
+        {
+            "id": "kids_bedroom", 
+            "name": "Kids Bedroom",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "",
+                "east" : "",
+                "south" : "",
+                "west" : "east_wing"
+            } 
+        },
+        {
+            "id": "parents_bedroom", 
+            "name": "Parents Bedroom",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "",
+                "east" : "",
+                "south" : "east_wing",
+                "west" : ""
+            } 
+        },
+        {
+            "id": "washroom", 
+            "name": "Washroom",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "east_wing",
+                "east" : "",
+                "south" : "",
+                "west" : ""
+            } 
+        },
+        {
+            "id": "west_wing", 
+            "name": "West Wing",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "kitchen",
+                "east" : "lobby",
+                "south" : "living_room",
+                "west" : "dining_room"
+            } 
+        },
+        {
+            "id": "kitchen", 
+            "name": "Kitchen",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "",
+                "east" : "",
+                "south" : "west_wing",
+                "west" : ""
+            } 
+        },
+        {
+            "id": "dining_room", 
+            "name": "Dining Room",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "",
+                "east" : "west_wing",
+                "south" : "",
+                "west" : ""
+            } 
+        },
+        {
+            "id": "living_room", 
+            "name": "Living Room",
+            "short_desc": "This is short description.",
+            "long_desc" : "This is a long description",
+            "neighbours": {
+                "north" : "west_wing",
+                "east" : "",
+                "south" : "",
+                "west" : ""
+            } 
+        }
+    ],
+    "items": [
+        {
+            "id" : "book",
+            "name" : "A Book",
+            "location" : "lobby"
+        }
+    ],
+    "player" : {
+        "name" : "Halit",
+        "location" : "lobby"
+    }
+}

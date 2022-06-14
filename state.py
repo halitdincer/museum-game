@@ -12,7 +12,7 @@ class Player(StateMachine):
     def __init__(self, name, room):
         self.name = name
         self.room = room
-        self.inventory = Room("Inventory: " + name,"lorem", "lorem ipsum", None, None, None, None)
+        self.inventory = Room(name+"_inventory","Inventory: " + name,"lorem", "lorem ipsum")
 
     def update(self, verb, obj):
         self.room =  self.room.update(verb,obj)
@@ -33,16 +33,16 @@ class State:
 
 class Room(State):
 
-    def __init__(self,name,short_desc,long_desc,north,east,south,west):
-
+    def __init__(self,id,name,short_desc,long_desc):
+        self.id = id
         self.name = name
         self.short_desc = short_desc
         self.long_desc = long_desc
         self.neighbours = {
-                    "north" : north,
-                    "east" : east,
-                    "south" : south,
-                    "west" : west }
+                    "north" : None,
+                    "east" : None,
+                    "south" : None,
+                    "west" : None }
 
     @property
     def items(self):
