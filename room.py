@@ -1,6 +1,6 @@
 from item import Item
 
-class State:
+class Location:
 
     def __init__(self):
         pass
@@ -14,7 +14,7 @@ class State:
     def __str__(self):
         pass
 
-class Room(State):
+class Room(Location):
 
     def __init__(self,id,name,short_desc,long_desc):
         self.id = id
