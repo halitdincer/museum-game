@@ -1,22 +1,5 @@
 from item import Item
 
-class StateMachine:
-    def __init__(self):
-        pass
-
-    def update(self, verb, obj):
-        pass
-
-class Player(StateMachine):
-
-    def __init__(self, name, room):
-        self.name = name
-        self.room = room
-        self.inventory = Room(name+"_inventory","Inventory: " + name,"lorem", "lorem ipsum")
-
-    def update(self, verb, obj):
-        self.room =  self.room.update(verb,obj)
-
 class State:
 
     def __init__(self):
