@@ -1,9 +1,11 @@
 from item import Item
 
+# Having location class at side in case if we have inventory subclass
 class Location:
 
-    def __init__(self):
-        pass
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
 
     def __repr__(self):
         return self.__str__()
@@ -14,8 +16,7 @@ class Location:
 class Room(Location):
 
     def __init__(self,id,name,short_desc,long_desc):
-        self.id = id
-        self.name = name
+        super().__init__(id,name)
         self.short_desc = short_desc
         self.long_desc = long_desc
         self.neighbours = {
