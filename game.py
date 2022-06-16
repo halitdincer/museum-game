@@ -1,5 +1,6 @@
 from item import *
-from state import *
+from room import *
+from character import *
 
 from os.path import exists
 import json
@@ -16,9 +17,9 @@ class Game:
 
     def update(self):
 
-        self.p_char.update()
+        self.p_char.take_turn()
 
-        for npc in self.np_chars: npc.update()
+        for npc in self.np_chars: npc.take_turn()
 
     def load(self):
         
@@ -60,6 +61,8 @@ class Game:
         for item in data['items']:
             location = next((x for x in self.rooms if x.id == item['location']), None)
             self.items.append(Item(item['id'],location))
+
+        print("Game loaded !")
 
     def save(self):
         pass
