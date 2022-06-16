@@ -5,9 +5,6 @@ class Location:
     def __init__(self):
         pass
 
-    def update(self, verb, obj): 
-        pass
-
     def __repr__(self):
         return self.__str__()
 
@@ -30,14 +27,6 @@ class Room(Location):
     @property
     def items(self):
         return [item for item in Item.instances if item.location == self]
-
-    def update(self, verb, obj):
-        if verb == 'move':
-            if self.neighbours[obj]:
-                return self.neighbours[obj]
-            else:
-                print("There is no entrance at this way.")
-                return self
 
     def __str__(self):
         return  "Room: " + self.name
