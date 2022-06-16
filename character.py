@@ -55,8 +55,6 @@ class Character:
 
 class Player(Character):
 
-    def __init__(self, name, room):
-        super().__init__(name,room)
 
     def take_turn(self):
 
@@ -78,7 +76,19 @@ class Player(Character):
 
 class NPC(Character):
 
-    def __init__(self, name, room, state):
-        super().__init__(name,room)
-        self.state = state
+    def set_state(self, state):
+        self.state = state        
 
+    def take_turn(self):
+        if self.state:
+            self.state.take_turn() 
+
+class State:
+
+    def __init__(self, character):
+        self.character = character
+
+class StandingState(State):
+
+    def take_turn(self):
+        self.character.status(None)

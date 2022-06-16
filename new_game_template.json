@@ -120,5 +120,11 @@
     "player" : {
         "name" : "Halit",
         "location" : "lobby"
-    }
+    },
+    "np_chars" : [
+        {
+            "name" : "Bot 1",
+            "location" : "lobby" 
+        }
+    ]
 }

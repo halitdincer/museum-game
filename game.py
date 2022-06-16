@@ -56,8 +56,15 @@ class Game:
         p_location = next((x for x in self.rooms if x.id == data['player']['location']), None)
         self.p_char = Player(data['player']['name'],p_location)
 
-        # load items
+        # load npcs
         
+        for npc in data['np_chars']:
+            location = next((x for x in self.rooms if x.id == npc['location']), None)
+            npc = NPC(npc['name'],location)
+            npc.set_state(StandingState(npc))
+            self.np_chars.append(npc)
+        
+        # load items
         for item in data['items']:
             location = next((x for x in self.rooms if x.id == item['location']), None)
             self.items.append(Item(item['id'],location))
