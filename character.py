@@ -3,8 +3,9 @@ from room import *
 
 class Character:
 
-    def __init__(self, name, room):
+    def __init__(self, game, name, room):
 
+        self.game = game
         self.name = name
         self.location = room
         self.inventory = Room(name+"_inventory","Inventory: " + name,"lorem", "lorem ipsum")
@@ -23,26 +24,20 @@ class Character:
     def pick_up(self,item_name):
         item = [item for item in self.location.items if item.name == item_name]
         if item :
-            print(self.name + " picked up: " + item[0].name)
             item[0].location = self.inventory
-        else:
-            print("There is no item with this name in your room")
+            self.game.log(self.name + " pick up " + object)
 
     def drop(self,item_name):
         item = [item for item in self.inventory.items if item.name == item_name]
         if item :
-            print(self.name + " dropped: " + item[0].name)
             item[0].location = self.location
-        else:
-            print("There is no item with this name in your inventory")
+            self.game.log(self.name + " drop " + object)
     
     def move(self, direction):
         
         if self.location.neighbours[direction]:
-            print(self.name + " went to: " + self.location.neighbours[direction].name )
             self.location = self.location.neighbours[direction]
-        else:
-            print("There is no entrance at this way.")
+            self.game.log(self.name + " move " + direction)
 
     def status(self, obj):
         # temporary status function to debug
@@ -55,12 +50,21 @@ class Character:
 
 class Player(Character):
 
+    # basic narrate
+    def narrate(self,verb,object):
+        if verb == 'pick up':
+            print("You picked up the " + object.name)
+        elif verb == 'drop':
+            print("You dropped the " + object.name)
+        elif verb == 'move':
+            print(" - You enter the " + self.location.name + " - ")
+            #print("You saw " + str(self.location.np_chars) + " in the room.")
+            if self.location.items == 1:
+                print("There is " + ','.join([item.name for item in self.location.items]) + " on the floor.")
 
     def take_turn(self):
 
-        print("What is your action?")
-
-        command = input()
+        command = input("> ")
 
         # temporary command parser
         if command :
@@ -71,13 +75,14 @@ class Player(Character):
                 
             if verb in self.verb_to_func.keys() :
                 self.verb_to_func[verb](object)
+                self.narrate(verb,object)
             else:
                 print("I didn't understand your command")
 
 class NPC(Character):
 
-    def __init__(self,name,room):
-        super().__init__(name,room)
+    def __init__(self,game, name, room):
+        super().__init__(game, name, room)
         self.state = TravelState(self,'parents_bedroom')
 
     def set_state(self, state):

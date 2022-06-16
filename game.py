@@ -14,12 +14,16 @@ class Game:
         self.actions = []
         self.rooms = []
         self.items = []
+        self.temp_log = []
 
     def update(self):
 
         self.p_char.take_turn()
 
         for npc in self.np_chars: npc.take_turn()
+    
+    def log(self,log_text):
+        self.temp_log.append(log_text)
 
     def load(self):
         
@@ -54,13 +58,13 @@ class Game:
 
         # load player
         p_location = next((x for x in self.rooms if x.id == data['player']['location']), None)
-        self.p_char = Player(data['player']['name'],p_location)
+        self.p_char = Player(self,data['player']['name'],p_location)
 
         # load npcs
         
         for npc in data['np_chars']:
             location = next((x for x in self.rooms if x.id == npc['location']), None)
-            self.np_chars.append(NPC(npc['name'],location))
+            self.np_chars.append(NPC(self,npc['name'],location))
         
         # load items
         for item in data['items']:
