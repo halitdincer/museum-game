@@ -59,7 +59,7 @@ class Player(Character):
         elif verb == 'move':
             print(" - You enter the " + self.location.name + " - ")
             #print("You saw " + str(self.location.np_chars) + " in the room.")
-            if self.location.items == 1:
+            if self.location.items:
                 print("There is " + ','.join([item.name for item in self.location.items]) + " on the floor.")
 
     def take_turn(self):
