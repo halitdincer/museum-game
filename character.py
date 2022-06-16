@@ -23,7 +23,7 @@ class Character:
     def pick_up(self,item_name):
         item = [item for item in self.location.items if item.name == item_name]
         if item :
-            print("You picked up: " + item[0].name)
+            print(self.name + " picked up: " + item[0].name)
             item[0].location = self.inventory
         else:
             print("There is no item with this name in your room")
@@ -31,7 +31,7 @@ class Character:
     def drop(self,item_name):
         item = [item for item in self.inventory.items if item.name == item_name]
         if item :
-            print("You dropped: " + item[0].name)
+            print(self.name + " dropped: " + item[0].name)
             item[0].location = self.location
         else:
             print("There is no item with this name in your inventory")
@@ -39,7 +39,7 @@ class Character:
     def move(self, direction):
         
         if self.location.neighbours[direction]:
-            print("You went to: " + self.location.neighbours[direction].name )
+            print(self.name + " went to: " + self.location.neighbours[direction].name )
             self.location = self.location.neighbours[direction]
         else:
             print("There is no entrance at this way.")
@@ -76,8 +76,12 @@ class Player(Character):
 
 class NPC(Character):
 
+    def __init__(self,name,room):
+        super().__init__(name,room)
+        self.state = TravelState(self,'parents_bedroom')
+
     def set_state(self, state):
-        self.state = state        
+        self.state = state      
 
     def take_turn(self):
         if self.state:
@@ -92,3 +96,38 @@ class StandingState(State):
 
     def take_turn(self):
         self.character.status(None)
+
+class TravelState(State):
+
+    def __init__(self,character,destination):
+        super().__init__(character)
+        self.destination = destination
+
+    def find_direction(self, room, destination):
+        visited = []
+        queue = []
+
+        visited.append(room)
+
+        for direction in room.neighbours.keys():
+            if room.neighbours[direction]:
+                queue.append({'self' : room.neighbours[direction],'direction' : direction})
+
+        while queue:
+
+            s = queue.pop(0) 
+
+            if s['self'].id == destination:
+                return s['direction']
+
+            for neighbour in s['self'].neighbours.values():
+                if neighbour not in visited:
+                    visited.append(neighbour)
+                    queue.append({'self' : neighbour,'direction' : s['direction']})
+        
+        return 'nothing'
+
+    def take_turn(self):
+        self.character.move(self.find_direction(self.character.location,self.destination))
+        if self.character.location.id == self.destination:
+            self.character.set_state(StandingState(self.character))

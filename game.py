@@ -60,9 +60,7 @@ class Game:
         
         for npc in data['np_chars']:
             location = next((x for x in self.rooms if x.id == npc['location']), None)
-            npc = NPC(npc['name'],location)
-            npc.set_state(StandingState(npc))
-            self.np_chars.append(npc)
+            self.np_chars.append(NPC(npc['name'],location))
         
         # load items
         for item in data['items']:
