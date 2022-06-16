@@ -13,7 +13,8 @@ class Character:
             'pick_up' : self.pick_up,
             'drop' : self.drop,
             'move' : self.move,
-            'status' : self.status,
+            'inspect' : self.inspect,
+            'check_inventory' : self.check_inventory,
         }   
 
     def take_turn(self):
@@ -39,13 +40,11 @@ class Character:
             self.location = self.location.neighbours[direction]
             self.game.log(self.name + " move " + direction)
 
-    def status(self, obj):
-        # temporary status function to debug
-        print("Player Name: " + self.name)
-        print("Player Inventory: " + str(self.inventory.items))
+    def inspect(self, item_name):
+        pass
 
-        print("Room Name: " + self.location.name)
-        print("Room Items: " + str(self.location.items))
+    def check_inventory(self, nothing):
+        pass
 
 
 class Player(Character):
@@ -53,7 +52,9 @@ class Player(Character):
     # basic narrate
     def narrate(self,verb,object):
         if verb == 'pick_up':
-            print("You picked up the " + object)
+            item = [item for item in self.location.items + self.inventory.items if item.name == object]
+            if item:
+                print("You picked up the " + item[0].name + " - " + item[0].short_desc)
         elif verb == 'drop':
             print("You dropped the " + object)
         elif verb == 'move':
@@ -61,6 +62,17 @@ class Player(Character):
             #print("You saw " + str(self.location.np_chars) + " in the room.")
             if self.location.items:
                 print("There is " + ','.join([item.name for item in self.location.items]) + " on the floor.")
+        elif verb == 'inspect':
+            item = [item for item in self.location.items + self.inventory.items if item.name == object] 
+            if item:
+                print(item[0].long_desc)
+        elif verb == 'check_inventory':
+            if self.inventory.items:
+                print("You have " + ','.join([item.name for item in self.inventory.items]) + " in your inventory.")
+            else:
+                print("You have nothing in your inventory.")
+            
+
 
     def take_turn(self):
 
@@ -100,7 +112,7 @@ class State:
 class StandingState(State):
 
     def take_turn(self):
-        self.character.status(None)
+        self.character.inspect(None)
 
 class TravelState(State):
 

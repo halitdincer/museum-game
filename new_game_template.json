@@ -112,9 +112,11 @@
     ],
     "items": [
         {
-            "id" : "book",
-            "name" : "A Book",
-            "location" : "lobby"
+            "id" : "knife",
+            "name" : "Knife",
+            "location" : "lobby",
+            "short_desc" : "It is very sharp.",
+            "long_desc" : "The knife is made out of steel and it has a leather handle. It looks really old but still very sharp somehow."
         }
     ],
     "player" : {

@@ -69,7 +69,7 @@ class Game:
         # load items
         for item in data['items']:
             location = next((x for x in self.rooms if x.id == item['location']), None)
-            self.items.append(Item(item['id'],location))
+            self.items.append(Item(item['id'],location,item['short_desc'],item['long_desc']))
 
         print("Game loaded !")
 
