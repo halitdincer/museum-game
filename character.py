@@ -25,13 +25,13 @@ class Character:
         item = [item for item in self.location.items if item.name == item_name]
         if item :
             item[0].location = self.inventory
-            self.game.log(self.name + " pick up " + object)
+            self.game.log(self.name + " pick up " + item_name)
 
     def drop(self,item_name):
         item = [item for item in self.inventory.items if item.name == item_name]
         if item :
             item[0].location = self.location
-            self.game.log(self.name + " drop " + object)
+            self.game.log(self.name + " drop " + item_name)
     
     def move(self, direction):
         
@@ -52,10 +52,10 @@ class Player(Character):
 
     # basic narrate
     def narrate(self,verb,object):
-        if verb == 'pick up':
-            print("You picked up the " + object.name)
+        if verb == 'pick_up':
+            print("You picked up the " + object)
         elif verb == 'drop':
-            print("You dropped the " + object.name)
+            print("You dropped the " + object)
         elif verb == 'move':
             print(" - You enter the " + self.location.name + " - ")
             #print("You saw " + str(self.location.np_chars) + " in the room.")
